@@ -15,6 +15,7 @@ import {
   getTheme,
   getLocation
 } from "../../utils/localStorage";
+import { flatten } from '../../utils/book';
 
 global.ePub = Epub;
 export default {
@@ -43,11 +44,7 @@ export default {
       }
       this.setMenuVisible(!this.menuVisible);
     },
-    hideTitleAndMenu() {
-      this.setMenuVisible(false);
-      this.setSettingVisible(-1);
-      this.setFontFamilyVisible(false);
-    },
+    
     initFontSize() {
       let fontSize = getFontSize(this.fileName);
       if (!fontSize) {
@@ -132,6 +129,19 @@ export default {
         event.stopPropagation();
       });
     },
+    parseBook(){
+      this.book.loaded.cover.then(cover=>{
+        this.book.archive.createUrl(cover).then((url) => {
+          this.setCover(url)
+        })
+      })
+      this.book.loaded.metadata.then((metadata) => {
+        this.setMetadata(metadata)
+      })
+      this.book.loaded.navigation.then((nav) => {
+        console.log( flatten(nav.toc))
+      })
+    },
     initEpub() {
       const url = `${process.env.VUE_APP_RES_URL}/epub/${this.fileName}.epub`;
       this.book = new Epub(url)
@@ -139,7 +149,7 @@ export default {
       this.initRendition()
       // 手势操作实现翻页
       this.initGesture()
-
+      this.parseBook()
       // 分页,图片无法处理，没法精确
       this.book.ready.then(() => {
           return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) /16))

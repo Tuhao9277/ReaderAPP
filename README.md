@@ -9,3 +9,13 @@
  函数式编程（编程式导航
  
  同步隐藏问题
+
+ 目录组件化渲染
+
+ 树形结构转化为一维数组
+
+ ```js
+ function flatten(array){
+     return [].concat( ...array.map(item=> [].concat(item,...flatten(item.subitems)) ))
+ }
+ ```
