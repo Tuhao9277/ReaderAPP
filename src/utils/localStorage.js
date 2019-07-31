@@ -52,8 +52,8 @@ export function saveBookmark(fileName,bookmark) {
 export function getReadTime(fileName){
     return getBookObject(fileName,'time')
 }
-export function saveReadTime(fileName,theme) {
-    return setBookObject(fileName,'time',theme)
+export function saveReadTime(fileName,time) {
+    return setBookObject(fileName,'time',time)
 }
 export function getNavigation(fileName){
     return getBookObject(fileName,'navigation')
