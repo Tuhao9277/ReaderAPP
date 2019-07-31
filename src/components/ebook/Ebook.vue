@@ -12,7 +12,8 @@ import {
   getFontSize,
   saveFontSize,
   saveTheme,
-  getTheme
+  getTheme,
+  getLocation
 } from "../../utils/localStorage";
 
 global.ePub = Epub;
@@ -21,13 +22,17 @@ export default {
   methods: {
     prevPage() {
       if (this.rendition) {
-        this.rendition.prev();
+        this.rendition.prev().then(() => {
+          this.refreshLocation()
+        })
         this.hideTitleAndMenu();
       }
     },
     nextPage() {
       if (this.rendition) {
-        this.rendition.next();
+        this.rendition.next().then((result) => {
+          this.refreshLocation()
+        })
         this.hideTitleAndMenu();
       }
     },
@@ -74,19 +79,22 @@ export default {
       });
       this.rendition.themes.select(this.defaultTheme);
     },
+   
     initRendition() {
       this.rendition = this.book.renderTo("read", {
         width: innerWidth,
         height: innerHeight,
         method: "default"
       });
-      // 初始化
-      this.rendition.display().then(() => {
+      // 初始化 
+      const location  = getLocation(this.fileName)
+      this.display(location,()=>{
         this.initTheme();
         this.initFontSize();
         this.initFontfamily();
         this.initGlobalStyle();
-      });
+      })
+     
        this.rendition.hooks.content.register(contents => {
         Promise.all([
           contents.addStylesheet(
@@ -137,6 +145,7 @@ export default {
           return this.book.locations.generate(750 * (window.innerWidth / 375) * (getFontSize(this.fileName) /16))
       }).then((locations) => {
             this.setBookAvailable(true)
+            this.refreshLocation()
           })
     }
   },

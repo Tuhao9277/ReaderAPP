@@ -7,8 +7,8 @@
                      <span class="icon-forward"></span>
                  </div>
           <div class="progress-wrapper">
-              <div class="progress-icon-wrapper">
-                  <span class="icon-back" @click="prevSection()"></span>
+              <div class="progress-icon-wrapper" @click="prevSection()">
+                  <span class="icon-back" ></span>
               </div>
             <input
               type="range"
@@ -27,7 +27,8 @@
               </div>
           </div>
           <div class="text-wrapper">
-            <span>{{bookAvailable?progress +'%':'加载中'}}</span>
+            <span class="progres-section-text">{{this.getSectionName}}</span>
+            <span>({{bookAvailable?progress +'%':'加载中'}})</span>
           </div>
              </div>
          </div>
@@ -35,13 +36,22 @@
 </template>
 <script>
 import { ebookMixin } from './../../utils/mixin'
-
 export default {
     mixins:[ebookMixin],
     data() {
         return {
             
         }
+    },
+    computed:{
+      getSectionName(){
+        if(this.section){
+          const sectionInfo = this.currentBook.section(this.section)
+          if(sectionInfo && sectionInfo.href){
+             return this.currentBook.navigation.get(sectionInfo.href).label
+          }
+        }
+      }
     },
     updated(){
         this.updateProgressBg()
@@ -56,7 +66,7 @@ export default {
         displayProgress(){
             // 获取定位数据，通过百分比
             const cfi = this.currentBook.locations.cfiFromPercentage(this.progress /100)
-                this.currentBook.rendition.display(cfi)
+            this.display(cfi)
         },
         // 进度条背景变化
         updateProgressBg(){
@@ -69,11 +79,27 @@ export default {
              })
         },
         prevSection(){
-
+          if(this.section >0 && this.bookAvailable){
+              this.setSection(this.section -1).then(() => {
+                 this.displaySection()
+              })
+          }
         },
         nextSection(){
-
-        }
+            //spine 表示阅读进度 多少个章节
+              if(this.section <this.currentBook.spine.length-1 && this.bookAvailable){
+              this.setSection(this.section +1).then(() => {
+                this.displaySection()
+              })
+          }
+        },
+        displaySection(){
+                  const sectionInfo = this.currentBook.section(this.section)
+                  if(sectionInfo && sectionInfo.href){
+                   this.display(sectionInfo.href)
+                  }
+        },
+       
     }
 }
 </script>
@@ -136,7 +162,12 @@ export default {
         width: 100%;
         color: #333;
         font-size: px2rem(12);
-        text-align: center;
+        @include center;
+        box-sizing: border-box;
+        padding : 0 px2rem(15);
+        .progres-section-text{
+         @include ellipsis;
+        }
       }
      }
     }
