@@ -77,7 +77,6 @@ export default {
               maskWidth.value--
               lineWidth.value++
             }
-
           }
         }
         mask.style.width = `${px2rem(maskWidth.value)}rem`
@@ -88,19 +87,19 @@ export default {
           if (this.add) {
             if (maskWidth.value === 16) {
               this.end = true
+            }
             } else {
               if (maskWidth.value === 0)
                 this.end = true
             }
           }
-        }
         if (this.end) {
           this.add = !this.add
           this.end = false
         }
-      });
-    }, 20)
-  },
+        });
+      }, 20)
+    }
 }
 </script>
 <style lang="scss" scoped>
