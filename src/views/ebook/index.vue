@@ -1,9 +1,10 @@
 <template>
     <div class="ebook-reader">
-        <div id="read">
+        <div id="ebook" ref="ebook">
           <ebook-title></ebook-title>
           <ebook-reader></ebook-reader>
           <ebook-menu></ebook-menu>
+          <ebook-bookmark></ebook-bookmark>
         </div>
     </div>
 </template>
@@ -11,6 +12,7 @@
 import EbookReader from '@/components/ebook/Ebook'
 import EbookTitle from '@/components/ebook/EbookTitle'
 import EbookMenu from '@/components/ebook/EbookMenu'
+import EbookBookmark from '@/components/ebook/EbookBookmark'
 import { getReadTime, saveReadTime } from '../../utils/localStorage';
 import { ebookMixin } from '../../utils/mixin';
 export default {
@@ -18,7 +20,8 @@ export default {
     components:{
       EbookReader,
       EbookTitle,
-      EbookMenu
+      EbookMenu,
+      EbookBookmark
     },
     methods:{
       // 开启定时任务
@@ -34,6 +37,25 @@ export default {
             saveReadTime(this.fileName,readTime)
           }
         }, 1000);
+      },
+      move(v){
+        this.$refs.ebook.style.top = v+'px'
+      },
+      restore(){
+        this.$refs.ebook.style.top = 0
+        this.$refs.ebook.style.transition = 'all .2s linear'
+        setTimeout(()=>{
+        this.$refs.ebook.style.transition = ''
+        },200)
+      }
+    },
+    watch:{
+      offsetY(v){
+        if(v>0){
+          this.move(v)
+        }else if(v === 0){
+          this.restore()
+        }
       }
     },
     mounted(){
@@ -47,5 +69,11 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+#ebook{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
 </style>

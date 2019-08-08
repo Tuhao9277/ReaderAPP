@@ -166,8 +166,6 @@ export default {
         flex: 0 0 px2rem(28);
         font-size: px2rem(12);
         @include center;
-        .icon-search {
-        }
       }
       .slide-contents-search-input {
         flex: 1;
