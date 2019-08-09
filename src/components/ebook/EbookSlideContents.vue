@@ -247,8 +247,7 @@ export default {
         line-height: px2rem(16);
         @include ellipsis;
       }
-      .slide-contents-item-page {
-      }
+
     }
   }
   .slide-search-list{

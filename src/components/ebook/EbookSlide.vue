@@ -44,7 +44,8 @@
 </template>
 <script>
 import { ebookMixin } from '../../utils/mixin'
-import EbookSildeContents from './EbookSildeContents'
+import EbookSlideContents from './EbookSlideContents'
+import EbookSlideBookmark from './EbookSlideBookmark'
 import EbookLoading from './EbookLoading'
 export default {
   mixins: [ebookMixin],
@@ -54,8 +55,8 @@ export default {
   data() {
     return {
       currentTab: 1,
-      content:EbookSildeContents,
-      bookmark:null
+      content:EbookSlideContents,
+      bookmark:EbookSlideBookmark
     }
   },
   methods: {

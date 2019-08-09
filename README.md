@@ -19,3 +19,6 @@
      return [].concat( ...array.map(item=> [].concat(item,...flatten(item.subitems)) ))
  }
  ```
+
+ 书签算法： 监听offsetY
+    epub cfi记录当前位置

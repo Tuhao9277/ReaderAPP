@@ -87,7 +87,7 @@ export default {
 .menu-bar {
       font-size: px2rem(20);
   .setting-wrapper {
-    z-index: 101;
+    z-index: 151;
     position: absolute;
     bottom: px2rem(48);
     left: 0;
@@ -230,7 +230,7 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    z-index: 101;
+    z-index: 151;
     display: flex;
     height: px2rem(48);
     background: #fff;
