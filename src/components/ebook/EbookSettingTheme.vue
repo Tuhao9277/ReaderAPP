@@ -50,7 +50,7 @@ export default {
 <style lang="scss" scoped>
 @import "@styles/global.scss";
     .setting-wrapper {
-    z-index: 101;
+    z-index: 152;
     position: absolute;
     bottom: px2rem(48);
     left: 0;

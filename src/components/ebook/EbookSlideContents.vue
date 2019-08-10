@@ -32,8 +32,14 @@
         >
       </div>
       <div class="slide-contents-book-info-wrapper">
-        <div class="slide-contents-book-title"> {{metadata.title}} </div>
-        <div class="slide-contents-book-anthor">{{metadata.creator}} </div>
+        <div class="slide-contents-book-title"> 
+          <span class="slide-contents-book-title-text">{{metadata.title}} </span>
+           </div>
+        <div class="slide-contents-book-anthor">
+          <span class="slide-contents-book-author-text">{{metadata.creator}}</span>
+
+       
+           </div>
 
       </div>
       <div class="slide-contents-book-progress-wrapper">
@@ -65,7 +71,9 @@
             class="slide-contents-item-label"
             :style="contentItemStyle(item)"
           >{{item.label}}</span>
-          <span class="slide-contents-item-page"></span>
+          <span class="slide-contents-item-page">
+            {{item.page}}
+          </span>
         </div>
     </scroll>
     <scroll class="slide-search-list" 
@@ -204,15 +212,24 @@ export default {
       box-sizing: border-box;
       .slide-contents-book-title {
         /* 屏幕宽度* 左侧占据 - 左右边距 - 标题边距 - 图片 - 右侧进度  */
-        width: px2rem(153.75);
+        /* width: px2rem(153.75); */
         font-size: px2rem(14);
         line-height: px2rem(16);
+          @include left;
+        .slide-contents-book-title-text{
         @include ellipsis2(3);
+        }
       }
       .slide-contents-book-anthor {
         font-size: px2rem(12);
-        width: px2rem(153.75);
-        @include ellipsis;
+        line-height: px2rem(14);
+        margin-top:px2rem(5);
+        /* width: px2rem(153.75); */
+        @include left;
+        .slide-contents-book-author-text{
+        @include ellipsis2(1);
+
+        }
       }
     }
     .slide-contents-book-progress-wrapper {
@@ -246,6 +263,11 @@ export default {
         font-size: px2rem(14);
         line-height: px2rem(16);
         @include ellipsis;
+      }
+      .slide-contents-item-page{
+        flex: 0 0 px2rem(30);
+        font-size: px2rem(10);
+        @include right;
       }
 
     }

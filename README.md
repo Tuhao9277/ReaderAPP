@@ -22,3 +22,16 @@
 
  书签算法： 监听offsetY
     epub cfi记录当前位置
+
+
+  -webkit-tap-highlight-color: rgba(0,0,0,0)
+  解决移动端高亮显示的问题，屏幕闪烁
+
+      e.preventDefault() 
+      解决屏幕向下滑动添加书签的滑动问题
+
+点击事件兼容性问题
+移动端 
+touchmove
+PC
+mousemove
