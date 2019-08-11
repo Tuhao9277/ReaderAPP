@@ -22,6 +22,8 @@
 
  书签算法： 监听offsetY
     epub cfi记录当前位置
+    使用数组的filter方法 将书签筛选出来
+
 
 
   -webkit-tap-highlight-color: rgba(0,0,0,0)
@@ -35,3 +37,7 @@
 touchmove
 PC
 mousemove
+
+mixin 对组件进行解耦
+
+正则匹配 ，提取地址信息

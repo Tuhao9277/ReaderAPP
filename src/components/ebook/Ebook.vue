@@ -198,6 +198,7 @@ export default {
         ]).then(() => { });
       });
     },
+    // 手势识别
     initGesture() {
       this.rendition.on("touchstart", event => {
         this.touchStartX = event.changedTouches[0].clientX;
@@ -274,6 +275,7 @@ export default {
             })
           })
         })
+        this.setPageList(locations)  
         this.setBookAvailable(true)
         this.refreshLocation()
       })

@@ -11,7 +11,7 @@
           class="slide-bookmark-item"
           v-for="(item, index) in bookmark"
           :key="index"
-          @click="displayBookMark(item.cfi)"
+          @click="displayBookmark(item.cfi)"
         >
           <span class="slide-bookmark-item-icon"><div class="icon-bookmark"></div></span>
           <span class="slide-bookmark-item-text">{{item.text}}</span>
