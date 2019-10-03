@@ -17,7 +17,7 @@ export default {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 100;
+    z-index: 200;
     width: 100%;
     height: px2rem(48);
     padding: 0 px2rem(15);

@@ -28,8 +28,8 @@
         <div
           class="point"
           :class="{'animation':runPointAnimation}"
-          v-for="item in pointList"
-          :key="item"
+          v-for="(item,index) in pointList"
+          :key="index"
         ></div>
       </div>
     </div>
@@ -68,7 +68,6 @@ export default {
       back: 1,
       inervalTime: 25,
       runFlapCardAnimation: false,
-      pointList: null,
       runPointAnimation: false,
       runBookCardAnimation: false
     };

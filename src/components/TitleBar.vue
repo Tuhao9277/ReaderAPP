@@ -37,7 +37,7 @@ export default {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 101;
+    z-index: 151;
     display: flex;
     height: px2rem(48);
     background: #fff;
