@@ -1,14 +1,29 @@
-import { mapGetters, mapActions } from 'vuex'
-import { themeList, addCss, removeAllCss,getReadTimeByMinute } from "./book";
-import { saveLocation, getBookmark } from "./localStorage";
+import {
+  mapGetters,
+  mapActions
+} from 'vuex'
+import {
+  themeList,
+  addCss,
+  removeAllCss,
+  getReadTimeByMinute
+} from "./book";
+import {
+  saveLocation,
+  getBookmark
+} from "./localStorage";
 
 export const storeHomeMixin = {
   computed: {
-    ...mapGetters(['offsetY','hotSearchOffsetY','flapCardVisible'])
+    ...mapGetters(['offsetY', 'hotSearchOffsetY', 'flapCardVisible'])
   },
   methods: {
-    ...mapActions(['setOffsetY','setHotSearchOffsetY',
-  'setFlapCardVisible'])
+    ...mapActions(['setOffsetY', 'setHotSearchOffsetY',
+      'setFlapCardVisible'
+    ]),
+    showBookDetail(book) {
+
+    }
   },
 }
 
@@ -35,13 +50,13 @@ export const ebookMixin = {
       'offsetY',
       'isBookmark'
     ]),
-    themeList(){
+    themeList() {
       return themeList(this)
     },
-    getSectionName(){
+    getSectionName() {
       return this.section ? this.navigation[this.section].label : ''
     }
-    
+
   },
   methods: {
     ...mapActions([
@@ -84,59 +99,58 @@ export const ebookMixin = {
           addCss(`${process.env.VUE_APP_RES_URL}/theme/theme_default.css`);
       }
     },
-    refreshLocation(){
+    refreshLocation() {
       const currentLocation = this.currentBook.rendition.currentLocation()
-      if(currentLocation && currentLocation.start){
+      if (currentLocation && currentLocation.start) {
         const startCfi = currentLocation.start.cfi
         const progress = this.currentBook.locations.percentageFromCfi(startCfi)
         this.setSection(currentLocation.start.index)
-        this.setProgress(Math.floor(progress *100))
-        saveLocation(this.fileName,startCfi)
+        this.setProgress(Math.floor(progress * 100))
+        saveLocation(this.fileName, startCfi)
         const bookmark = getBookmark(this.fileName)
-        if(bookmark){
-          if(bookmark.some(item=>item.cfi === startCfi)){
+        if (bookmark) {
+          if (bookmark.some(item => item.cfi === startCfi)) {
             this.setIsBookmark(true)
-          }else{
+          } else {
             this.setIsBookmark(false)
           }
-        }else{
+        } else {
           this.setIsBookmark(false)
         }
       }
-      if(this.pagelist){
+      if (this.pagelist) {
         const totalPage = this.pagelist.length
         const currentPage = currentLocation.start.location
-        if(currentPage && currentPage>0){
+        if (currentPage && currentPage > 0) {
           this.setPaginate(currentPage + '/' + totalPage)
-        }else{
+        } else {
           this.setPaginate('')
         }
-      }
-      else{
+      } else {
         this.setPaginate('')
       }
-  },
-  display(target,cb){
-    if(target){
-      this.currentBook.rendition.display(target).then(() => {
-        this.refreshLocation()
-        cb && cb()
-      })
-    }else{
-      this.currentBook.rendition.display().then(() => {
-        this.refreshLocation()
-        cb && cb()
-      })
-    }
-  },
-  hideTitleAndMenu() {
-    this.setMenuVisible(false);
-    this.setSettingVisible(-1);
-    this.setFontFamilyVisible(false);
-  },
-  
-  getReadTimeText(){
-    return this.$t('book.haveRead').replace('$1',getReadTimeByMinute(this.fileName))
-  },
+    },
+    display(target, cb) {
+      if (target) {
+        this.currentBook.rendition.display(target).then(() => {
+          this.refreshLocation()
+          cb && cb()
+        })
+      } else {
+        this.currentBook.rendition.display().then(() => {
+          this.refreshLocation()
+          cb && cb()
+        })
+      }
+    },
+    hideTitleAndMenu() {
+      this.setMenuVisible(false);
+      this.setSettingVisible(-1);
+      this.setFontFamilyVisible(false);
+    },
+
+    getReadTimeText() {
+      return this.$t('book.haveRead').replace('$1', getReadTimeByMinute(this.fileName))
+    },
   }
 }
